@@ -7,10 +7,19 @@ import numpy as np
 import cv2
 import json
 import torch
+import pandas as pd
+import os
+import csv
 
 # input image
 LABELS_file = 'imagenet-simple-labels.json'
-image_file = 'testBiden.jpg'
+# image_file = 'testBiden.jpg'
+
+data_dir = "D:\\Users\\Anude\\Documents\\CS 497\\CAM\\celebA\\img_align_celeba\\img_align_celeba"
+test_df = pd.read_pickle('test.pickle')
+test_file_endings = list(test_df.drop('labels',1).index)
+test_file_names_full = [os.path.join(data_dir,name) for name in test_file_endings]
+
 # networks such as googlenet, resnet, densenet already use global average pooling at the end, so CAM could be used directly.
 model_id = 2
 if model_id == 1:
@@ -58,34 +67,50 @@ preprocess = transforms.Compose([
    normalize
 ])
 
-# load test image
-img_pil = Image.open(image_file)
-img_tensor = preprocess(img_pil)
-img_variable = Variable(img_tensor.unsqueeze(0))
-logit = net(img_variable)
-
 # load the imagenet category list
-with open(LABELS_file) as f:
-    classes = json.load(f)
+# with open(LABELS_file) as f:
+#     classes = json.load(f)
 
-classes = ['female','male']
+classes = ['Female','Male']
+predictions = []
 
-h_x = F.softmax(logit, dim=1).data.squeeze()
-probs, idx = h_x.sort(0, True)
-probs = probs.numpy()
-idx = idx.numpy()
+for i, image_file in enumerate(test_file_names_full):
+    # load test image
+    img_pil = Image.open(image_file)
+    img_tensor = preprocess(img_pil)
+    img_variable = Variable(img_tensor.unsqueeze(0))
+    logit = net(img_variable)
+    index_pred = torch.argmax(logit).item()
+    predictions.append(index_pred)
 
-# output the prediction
-# for i in range(0, 5):
-#     print('{:.3f} -> {}'.format(probs[i], classes[idx[i]]))
+    
+    h_x = F.softmax(logit, dim=1).data.squeeze()
+    probs, idx = h_x.sort(0, True)
+    probs = probs.numpy()
+    idx = idx.numpy()
+    
 
-# generate class activation mapping for the top1 prediction
-CAMs = returnCAM(features_blobs[0], weight_softmax, [idx[0]])
+    # output the prediction
+    # for i in range(0, 5):
+    #     print('{:.3f} -> {}'.format(probs[i], classes[idx[i]]))
 
-# render the CAM and output
-print('output CAM.jpg for the top1 prediction: %s'%classes[idx[0]])
-img = cv2.imread(image_file)
-height, width, _ = img.shape
-heatmap = cv2.applyColorMap(cv2.resize(CAMs[0],(width, height)), cv2.COLORMAP_JET)
-result = heatmap * 0.3 + img * 0.5
-cv2.imwrite('CAM_biden.jpg', result)
+    # generate class activation mapping for the top1 prediction
+    
+    CAMs = returnCAM(features_blobs[index_pred], weight_softmax, [idx[index_pred]])
+    
+
+    # render the CAM and output
+    
+    print('output CAM.jpg for the top1 prediction: %s'%classes[idx[0]])
+    img = cv2.imread(image_file)
+    height, width, _ = img.shape
+    heatmap = cv2.applyColorMap(cv2.resize(CAMs[0],(width, height)), cv2.COLORMAP_JET)
+    result = heatmap * 0.3 + img * 0.5
+    cv2.imwrite(f'./results_test/{test_file_endings[i]}', result)
+    
+
+# pred_df = pd.DataFrame(predictions, columns=['predictions'])
+# pred_df.to_csv('./results/predictions.csv', index=False)
+with open("predictions_test.csv","w") as f:
+    wr = csv.writer(f,delimiter="\n")
+    wr.writerow(predictions)

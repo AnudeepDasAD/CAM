@@ -92,7 +92,8 @@ while True:
     img_tensor = preprocess(pil)
     img_variable = Variable(img_tensor.unsqueeze(0))
     logit = net(img_variable)
-    print(classes[torch.argmax(logit).item()])
+    index_pred = torch.argmax(logit).item()
+    print(classes[index_pred])
 
     h_x = F.softmax(logit, dim=1).data.squeeze()
     probs, idx = h_x.sort(0, True)
