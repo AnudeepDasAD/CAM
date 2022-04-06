@@ -22,8 +22,8 @@ if model_id == 1:
     net = models.squeezenet1_1(pretrained=True)
     finalconv_name = 'features' # this is the last conv layer of the network
 elif model_id == 2:
-    net = models.resnet18(pretrained=False)
-    net = torch.load('resnet_bsize8_epoch5_full.pt')
+    net = models.resnet18(pretrained=True)
+    net = torch.load('resnet_bsize8_epoch5_full_1.pt')
     finalconv_name = 'layer4'
 elif model_id == 3:
     net = models.densenet161(pretrained=True)
@@ -37,11 +37,11 @@ def hook_feature(module, input, output):
     features_blobs.append(output.data.cpu().numpy())
 
 # This allows us to get the output blobs?
-net._modules.get(finalconv_name).register_forward_hook(hook_feature)
+net._modules["0"]._modules.get(finalconv_name).register_forward_hook(hook_feature)
 
 # get the softmax weight- the second last param
 params = list(net.parameters())
-weight_softmax = np.squeeze(params[-2].data.numpy())
+weight_softmax = np.squeeze(params[-4].data.numpy())
 
 def returnCAM(feature_conv, weight_softmax, class_idx):
     # generate the class activation maps upsample to 256x256

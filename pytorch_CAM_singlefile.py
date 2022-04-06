@@ -26,8 +26,8 @@ if model_id == 1:
     net = models.squeezenet1_1(pretrained=True)
     finalconv_name = 'features' # this is the last conv layer of the network
 elif model_id == 2:
-    net = models.resnet18(pretrained=False)
-    net = torch.load('resnet_bsize8_epoch5_full.pt')
+    net = models.resnet18(pretrained=True)
+    net = torch.load('resnet_bsize8_epoch5_full_1.pt')
     finalconv_name = 'layer4'
 elif model_id == 3:
     net = models.densenet161(pretrained=True)
@@ -38,11 +38,11 @@ features_blobs = []
 def hook_feature(module, input, output):
     features_blobs.append(output.data.cpu().numpy())
 
-net._modules.get(finalconv_name).register_forward_hook(hook_feature)
+net._modules["0"]._modules.get(finalconv_name).register_forward_hook(hook_feature)
 
 # get the softmax weight
 params = list(net.parameters())
-weight_softmax = np.squeeze(params[-2].data.numpy())
+weight_softmax = np.squeeze(params[-4].data.numpy())
 
 def returnCAM(feature_conv, weight_softmax, class_idx):
     # generate the class activation maps upsample to 256x256
@@ -83,7 +83,7 @@ for i, image_file in enumerate(test_file_names_full):
     index_pred = torch.argmax(logit).item()
     predictions.append(index_pred)
 
-    
+
     h_x = F.softmax(logit, dim=1).data.squeeze()
     probs, idx = h_x.sort(0, True)
     probs = probs.numpy()
@@ -96,7 +96,7 @@ for i, image_file in enumerate(test_file_names_full):
 
     # generate class activation mapping for the top1 prediction
     
-    CAMs = returnCAM(features_blobs[index_pred], weight_softmax, [idx[index_pred]])
+    CAMs = returnCAM(features_blobs[0], weight_softmax, [idx[0]])
     
 
     # render the CAM and output
@@ -106,11 +106,11 @@ for i, image_file in enumerate(test_file_names_full):
     height, width, _ = img.shape
     heatmap = cv2.applyColorMap(cv2.resize(CAMs[0],(width, height)), cv2.COLORMAP_JET)
     result = heatmap * 0.3 + img * 0.5
-    cv2.imwrite(f'./results_test/{test_file_endings[i]}', result)
+    cv2.imwrite(f'./results_test3/{test_file_endings[i]}', result)
     
 
 # pred_df = pd.DataFrame(predictions, columns=['predictions'])
 # pred_df.to_csv('./results/predictions.csv', index=False)
-with open("predictions_test.csv","w") as f:
+with open("predictions_test3.csv","w") as f:
     wr = csv.writer(f,delimiter="\n")
     wr.writerow(predictions)
