@@ -27,7 +27,8 @@ if model_id == 1:
     finalconv_name = 'features' # this is the last conv layer of the network
 elif model_id == 2:
     net = models.resnet18(pretrained=True)
-    net = torch.load('resnet_bsize8_epoch5_full_1.pt')
+    # net = torch.load('resnet_bsize8_epoch5_full_1.pt')
+    net = torch.load('resnet_bsize8_epoch5_full_1_bal.pt')
     finalconv_name = 'layer4'
 elif model_id == 3:
     net = models.densenet161(pretrained=True)
@@ -106,11 +107,11 @@ for i, image_file in enumerate(test_file_names_full):
     height, width, _ = img.shape
     heatmap = cv2.applyColorMap(cv2.resize(CAMs[0],(width, height)), cv2.COLORMAP_JET)
     result = heatmap * 0.3 + img * 0.5
-    cv2.imwrite(f'./results_test3/{test_file_endings[i]}', result)
+    cv2.imwrite(f'./results_test_balance/{test_file_endings[i]}', result)
     
 
 # pred_df = pd.DataFrame(predictions, columns=['predictions'])
 # pred_df.to_csv('./results/predictions.csv', index=False)
-with open("predictions_test3.csv","w") as f:
+with open("predictions_test_balance.csv","w") as f:
     wr = csv.writer(f,delimiter="\n")
     wr.writerow(predictions)
