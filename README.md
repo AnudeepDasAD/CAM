@@ -52,7 +52,7 @@ Balancing the number of males and females made the accuracies a little closer to
 ## Non-Binary Analysis
 Since the model was trained on data which was labelled male or female (binary), we also evaluate the model on celebrities who identify as non-binary and analyze the results, both in terms of the prediction accuracy and the output CAM images. We also have a well-known public figure for comparison. The model predicts every single example as male, and the CAM images produced seem to focus on irrelevant parts of each image. Further results are at [non_binary_analysis](/non_binary_analysis/).
 
-![Non-binary CAM result 3. Model focuses on irrelevant parts of image](/non_binary_analysis/results/3.jpg)
+![Non-binary CAM result 1. Model focuses on irrelevant parts of image](/non_binary_analysis/results/1.jpg)
 
 
 ## References
