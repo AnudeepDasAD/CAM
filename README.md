@@ -50,11 +50,13 @@ Balancing the number of males and females made the accuracies a little closer to
 
 
 ## Non-Binary Analysis
-TODO
+Since the model was trained on data which was labelled male or female (binary), we also evaluate the model on celebrities who identify as non-binary and analyze the results, both in terms of the prediction accuracy and the output CAM images. We also have a well-known public figure for comparison. The model predicts every single example as male, and the CAM images produced seem to focus on irrelevant parts of each image. Further results are at [non_binary_analysis](/non_binary_analysis/).
+
+![Non-binary CAM result 3. Model focuses on irrelevant parts of image](/results/3.jpg)
 
 
 ## References
-The work on conditional activation maps is taken from here:
+The work on conditional activation maps is taken from [here](http://cnnlocalization.csail.mit.edu):
 ```
 @inproceedings{zhou2016cvpr,
     author    = {Zhou, Bolei and Khosla, Aditya and Lapedriza, Agata and Oliva, Aude and Torralba, Antonio},
