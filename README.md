@@ -26,6 +26,8 @@ Some predicted class activation maps are:
 
 ## Webcam demo of own face
 
+You can see the demo with this mp4 file: ![demo](https://github.com/AnudeepDasAD/CAM/blob/main/CAM%202022-04-12%2013-18-53.mp4)
+
 ## References
 The work on conditional activation maps is taken from here:
 ```
