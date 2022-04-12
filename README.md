@@ -30,9 +30,20 @@ You can see the demo with this mp4 file: ![demo](https://github.com/AnudeepDasAD
 
 Also here: https://user-images.githubusercontent.com/55476249/163021617-5f20ea2d-6683-4447-8c03-0743a89b1beb.mp4
 
+You can run it yourself by running pytorch_CAM.py
 
 
 ## Bunch of data analysis of various types 
+
+You can find the analyses for the balanced and unbalanced data ![here](https://github.com/AnudeepDasAD/CAM/blob/main/celeba_dataset_analysis_balance.ipynb) and 
+![here](https://github.com/AnudeepDasAD/CAM/blob/main/celeba_dataset_analysis_unbalance.ipynb) respectively. These files are essentially the same, except 
+the flag on cell 15 (use_balanced) is changed. Analysis starts from cell 26.
+
+We find that the accuracy for males is greater (97.3% vs 96.6%) despite having fewer males in the training dataset (38.6% vs 61.4%). Since the CAM paper indicates that a net with a CNN "looks" at an entire image, the fact that ImageNet (which was used to train ResNet) has images with human faces in them, the imbalance of male and female humans in ImageNet may have led to an imbalance in the performance for our downstream facial recognition task. Balancing the number of males and females made the accuracies a little closer together, though, curiously, it decreased both of the accuracies (96.9% vs 96.5% now). 
+
+Also, interestingly, the accuracy is higher for older, darker males, and younger, paler females. Though the accuracy dropped for paler younger females when the 
+training set was balanced. Darker, younger females performed better when sex alone was balanced.
+
 
 ## References
 The work on conditional activation maps is taken from here:
