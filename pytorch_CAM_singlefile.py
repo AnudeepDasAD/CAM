@@ -108,6 +108,14 @@ for i, image_file in enumerate(test_file_names_full):
     heatmap = cv2.applyColorMap(cv2.resize(CAMs[0],(width, height)), cv2.COLORMAP_JET)
     result = heatmap * 0.3 + img * 0.5
     cv2.imwrite(f'./results_test_balance/{test_file_endings[i]}', result)
+
+    # net = models.resnet18(pretrained=True)
+    # net = torch.load('resnet_bsize8_epoch5_full_1_bal.pt')
+    # finalconv_name = 'layer4'
+    # feature_blobs = []
+    # net._modules["0"]._modules.get(finalconv_name).register_forward_hook(hook_feature)
+    # params = list(net.parameters())
+    # weight_softmax = np.squeeze(params[-4].data.numpy())
     
 
 # pred_df = pd.DataFrame(predictions, columns=['predictions'])

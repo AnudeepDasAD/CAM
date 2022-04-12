@@ -117,6 +117,14 @@ while True:
     cv2.imwrite('CAM2.jpg', camresult)
     cv2.imshow('CAM', camresult)
 
+    # net = models.resnet18(pretrained=True)
+    # net = torch.load('resnet_bsize8_epoch5_full_1.pt')
+    # finalconv_name = 'layer4'
+    # feature_blobs = []
+    # net._modules["0"]._modules.get(finalconv_name).register_forward_hook(hook_feature)
+    # params = list(net.parameters())
+    # weight_softmax = np.squeeze(params[-4].data.numpy())
+
     if cv2.waitKey(20) & 0xFF == ord('q'):
         break
 
