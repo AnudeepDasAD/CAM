@@ -11,11 +11,7 @@ import pandas as pd
 import os
 import csv
 
-# input image
-LABELS_file = 'imagenet-simple-labels.json'
-# image_file = 'testBiden.jpg'
-
-test_dir = "./non_binary_test"
+test_dir = "../non_binary_analysis"
 test_file_endings = [name for name in sorted(os.listdir(f'{test_dir}/active')) if name.endswith('.jpg')]
 test_file_names_full = [os.path.join(f'{test_dir}/active', name) for name in test_file_endings]
 
@@ -26,8 +22,7 @@ if model_id == 1:
     finalconv_name = 'features' # this is the last conv layer of the network
 elif model_id == 2:
     net = models.resnet18(pretrained=True)
-    # net = torch.load('resnet_bsize8_epoch5_full_1.pt')
-    net = torch.load('resnet_bsize8_epoch5_full_1_bal.pt')
+    net = torch.load('../model_training/resnet_bsize8_epoch5_full_1_bal.pt')
     finalconv_name = 'layer4'
 elif model_id == 3:
     net = models.densenet161(pretrained=True)
@@ -57,6 +52,7 @@ def returnCAM(feature_conv, weight_softmax, class_idx):
         cam_img = np.uint8(255 * cam_img)
         output_cam.append(cv2.resize(cam_img, size_upsample))
     return output_cam
+
 normalize = transforms.Normalize(
    mean=[0.485, 0.456, 0.406],
    std=[0.229, 0.224, 0.225]
@@ -66,10 +62,6 @@ preprocess = transforms.Compose([
    transforms.ToTensor(),
    normalize
 ])
-
-# load the imagenet category list
-# with open(LABELS_file) as f:
-#     classes = json.load(f)
 
 classes = ['Female','Male']
 predictions = []
@@ -83,18 +75,10 @@ for i, image_file in enumerate(test_file_names_full):
     index_pred = torch.argmax(logit).item()
     predictions.append(index_pred)
 
-
     h_x = F.softmax(logit, dim=1).data.squeeze()
     probs, idx = h_x.sort(0, True)
     probs = probs.numpy()
     idx = idx.numpy()
-    
-
-    # output the prediction
-    # for i in range(0, 5):
-    #     print('{:.3f} -> {}'.format(probs[i], classes[idx[i]]))
-
-    # generate class activation mapping for the top1 prediction
     
     CAMs = returnCAM(features_blobs[0], weight_softmax, [idx[0]])
     
