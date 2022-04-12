@@ -5,18 +5,17 @@ TODO: Short overview of project purpose and scope
 
 
 ## Conditional Activation Maps
-We propose a simple technique to expose the implicit attention of Convolutional Neural Networks on the image. It highlights the most informative image regions relevant to the predicted class. You could get attention-based model instantly by tweaking your own CNN a little bit more. The paper is published at [CVPR'16](http://arxiv.org/pdf/1512.04150.pdf).
-
-The popular networks such as ResNet, DenseNet, SqueezeNet, Inception already have global average pooling at the end, so you could generate the heatmap directly without even modifying the network architecture.
+We using conditional activation maps (CAM) to expose the implicit attention of Convolutional Neural Networks on each image. It highlights the most informative image regions relevant to the predicted class. The work is published at [CVPR'16](http://arxiv.org/pdf/1512.04150.pdf). This techniques rely on a global average pooling layer near the end, which popular networks such as ResNet, DenseNet, SqueezeNet, Inception already have.
 
 The framework of the Class Activation Mapping is as below:
 ![Framework](http://cnnlocalization.csail.mit.edu/framework.jpg)
 
-Some predicted class activation maps are:
-![Results](http://cnnlocalization.csail.mit.edu/example.jpg)
-
 
 ## Model Training and Development
+
+We take an existing ResNet model and retrain it using the CelebA dataset. The code and model for this section can be found in [/model_training](/model_training/). We load the pretrained model on ImageNet, then retrain for 5 further epochs on CelebA. We chose 5 as the number of epochs as the validation accuracy was already quite high and plateauing (unlikely to improve further) and due to how incredibly long it takes for the model to train. 
+
+Previously, attempts at training a model which predicts all 40 categories of the CelebA labels caused convergence issues, so we focused on predicting gender only. As well, we tried to train a version using SqueezeNet for performance benefits, but it performed poorly on validation. Thus, our ResNet model is a binary classifier at predicting gender.
 
 
 ## CAM Demo with Webcam
