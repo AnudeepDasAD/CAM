@@ -37,7 +37,9 @@ Here are some CAM results on test celebrity images from the CelebA dataset.
 
 This indicates that for females, there is significant weight put on the chin and glabella, and for males, there is indication of less weight on the chin and glabella, more weight on the right cheek, and much less weight on the left cheek.
 
-Since the weightage of the entire image changes across test examples, there is also indication that not only specific areas of a person's face impact the algorithm's prediction, but the background itself is also taken into account. We expected that the colours for the weights would change only a little on the person's face and the background would be left alone. This is not the case, however, as the CAM images reveal that the model is finding the entire image (including the background) to be relevant for prediction. 
+Since the weightage of the entire image changes across test examples, there is also indication that not only specific areas of a person's face impact the algorithm's prediction, but the background itself is also taken into account. We expected that the colours for the weights would change only a little on the person's face and the background would be left alone. This is not the case, however, as the CAM images reveal that the model is finding the entire image (including the background) to be relevant for prediction.
+
+The zip file containing all of the test image results was too large (over 100 MB limit on GitHub), hence they are not available on github. However, they all look similar to this.
 
 
 ## CAM Demo with Webcam
