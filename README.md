@@ -19,7 +19,7 @@ The framework of the Class Activation Mapping is as below:
 
 ## Model Training and Development
 
-We take an existing ResNet model and retrain it using the CelebA dataset. The code and model for this section can be found in [/model_training](/model_training/). We load the pretrained model on ImageNet, then retrain for 5 further epochs on CelebA. We chose 5 as the number of epochs as the validation accuracy was already quite high and plateauing (unlikely to improve further) and due to how incredibly long it takes for the model to train. 
+We take an existing ResNet model and retrain it using the CelebA dataset. The code and model for this section can be found in [model_training/](/model_training/). We load the pretrained model on ImageNet, then retrain for 5 further epochs on CelebA. We chose 5 as the number of epochs as the validation accuracy was already quite high and plateauing (unlikely to improve further) and due to how incredibly long it takes for the model to train. 
 
 The original training dataset is unbalanced in terms of gender. For comparison, we create a balanced version of the model by removing images from the class with a greater number of examples so that the dataset is balanced. 
 
@@ -42,7 +42,7 @@ Since the weightage of the entire image changes across test examples, there is a
 
 ## CAM Demo with Webcam
 
-We can apply the CAM technique to our own faces in real time through the user's webcam. You can see a short demo with this mp4 file: [CAM_webcam.mp4](/demo/CAM_webcam.mp4) or [here](https://user-images.githubusercontent.com/55476249/163021617-5f20ea2d-6683-4447-8c03-0743a89b1beb.mp4).
+We can apply the CAM technique to our own faces in real time through the user's webcam. You can see a short demo with this mp4 file: [CAM_webcam.mp4](/demo/CAM_webcam.mp4) or [here](https://user-images.githubusercontent.com/55476249/163021617-5f20ea2d-6683-4447-8c03-0743a89b1beb.mp4). You may need to download the file to view it.
 
 You can also try it yourself on your own system by running [pytorch_CAM.py](/pytorch_CAM.py).
 
@@ -57,7 +57,7 @@ Balancing the number of males and females made the accuracies a little closer to
 
 
 ## Non-Binary Analysis
-Since the model was trained on data which was labelled male or female (binary), we also evaluate the model on celebrities who identify as non-binary and analyze the results, both in terms of the prediction accuracy and the output CAM images. We also have a well-known public figure for comparison. The model predicts every single example as male, and the CAM images produced seem to focus on irrelevant parts of each image. Further results are at [non_binary_analysis](/non_binary_analysis/).
+Since the model was trained on data which was labelled male or female (binary), we also evaluate the model on celebrities who identify as non-binary and analyze the results, both in terms of the prediction accuracy and the output CAM images. We also have a well-known public figure for comparison. The model predicts every single example as male, and the CAM images produced seem to focus on irrelevant parts of each image. Further results are at [non_binary_analysis/](/non_binary_analysis/).
 
 ![Non-binary CAM result 1. Model focuses on irrelevant parts of image](/non_binary_analysis/results/1.jpg)
 
