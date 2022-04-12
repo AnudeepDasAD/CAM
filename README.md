@@ -8,6 +8,7 @@ TODO: Short overview of project purpose and scope
 * Conditional activation maps
 * Model training/development
 * Webcam demo on own face
+* Sample CAM results on test images
 * Bunch of data analysis of various types
 * Results on gender neutral people
 
@@ -31,6 +32,18 @@ You can see the demo with this mp4 file: ![demo](https://github.com/AnudeepDasAD
 Also here: https://user-images.githubusercontent.com/55476249/163021617-5f20ea2d-6683-4447-8c03-0743a89b1beb.mp4
 
 You can run it yourself by running pytorch_CAM.py
+
+
+## Sample CAM results on test images
+
+Here are some CAM results on test celebrity images from the CelebA dataset.
+
+![182638](https://user-images.githubusercontent.com/55476249/163027226-80131b10-6e70-47eb-9376-1b74617db6af.jpg)
+![182661](https://user-images.githubusercontent.com/55476249/163027353-a8d1155a-488d-4077-9703-1a5229720ce9.jpg)
+![182671](https://user-images.githubusercontent.com/55476249/163027392-fe62b09d-2e72-4e14-a278-1e8f4dc165a6.jpg)
+![182643](https://user-images.githubusercontent.com/55476249/163027726-3aca1712-3bc6-4ba8-82fd-dd02145b8919.jpg)
+
+This indicates that for females, there is significant weight put on the chin and glabella, and for males, there is indication of less weight on the chin and glabella, more weight on the right cheek, and much less weight on the right cheek
 
 
 ## Bunch of data analysis of various types 
