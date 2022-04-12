@@ -6,10 +6,10 @@ First, for every single input image, the model predicts that the individual is m
 
 The CAM images produced are also quite flawed. They show the model as largely ignoring the face and instead focusing on different parts of the background which we would usually expect to play little role in identifying someone's gender. For these cases where the individual is non-binary, the model seems to do an especially poor job. Our female example shows the model as focusing on relevant parts of the individual's face, consistent with expectations. 
 
-![Non-binary CAM result 1. Model focuses on irrelevant parts of image](/results/1.jpg)
+![Non-binary CAM result 1. Model focuses on irrelevant parts of image](./results/1.jpg)
 
-![Non-binary CAM result 6. Model focuses on irrelevant parts of image](/results/6.jpg)
+![Non-binary CAM result 6. Model focuses on irrelevant parts of image](./results/6.jpg)
 
-![Non-binary CAM result 8. Model focuses on irrelevant parts of image](/results/8.jpg)
+![Non-binary CAM result 8. Model focuses on irrelevant parts of image](./results/8.jpg)
 
-![Non-binary CAM baseline. Model focuses on relevant parts of image](/results/0.jpg)
+![Non-binary CAM baseline. Model focuses on relevant parts of image](./results/0.jpg)
