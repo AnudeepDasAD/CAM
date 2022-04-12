@@ -7,7 +7,7 @@ TODO: Short overview of project purpose and scope
 ## Other sections
 * Conditional activation maps
 * Model training/development
-* Webcam demo on own face?
+* Webcam demo on own face
 * Bunch of data analysis of various types
 * Results on gender neutral people
 
@@ -23,6 +23,8 @@ The framework of the Class Activation Mapping is as below:
 Some predicted class activation maps are:
 ![Results](http://cnnlocalization.csail.mit.edu/example.jpg)
 
+
+## Webcam demo of own face
 
 ## References
 The work on conditional activation maps is taken from here:
