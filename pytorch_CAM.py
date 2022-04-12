@@ -12,10 +12,6 @@ import os
 import torch
 import json
 
-# input image
-LABELS_file = 'imagenet-simple-labels.json'
-image_file = 'test.jpg'
-
 # networks such as googlenet, resnet, densenet already use global average pooling at the end, so CAM could be used directly.
 model_id = 2
 if model_id == 1:
@@ -23,7 +19,7 @@ if model_id == 1:
     finalconv_name = 'features' # this is the last conv layer of the network
 elif model_id == 2:
     net = models.resnet18(pretrained=True)
-    net = torch.load('resnet_bsize8_epoch5_full_1.pt')
+    net = torch.load('model_training/resnet_bsize8_epoch5_full_1.pt')
     finalconv_name = 'layer4'
 elif model_id == 3:
     net = models.densenet161(pretrained=True)
@@ -71,11 +67,6 @@ preprocess = transforms.Compose([
    normalize
 ])
 
-
-# load the imagenet category list
-with open(LABELS_file) as f:
-    classes = json.load(f)
-
 classes = ['Female', 'Male']
 
 # Attempting to access webcam
@@ -84,9 +75,6 @@ cap = cv2.VideoCapture(0)
 while True:
     #reads the code frame-by-frame
     ret, frame = cap.read()
-    
-    # gray = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
-    # gray_pil = Image.fromarray(gray)
 
     pil = Image.fromarray(frame)
     img_tensor = preprocess(pil)
@@ -104,8 +92,6 @@ while True:
     CAMs = returnCAM(features_blobs[0], weight_softmax, [idx[0]])
 
     # render the CAM and output
-    # print('output CAM.jpg for the top1 prediction: %s'%classes[idx[0]])
-    # img = cv2.imread('test.jpg')
     height, width, _ = frame.shape
     resized = cv2.resize(CAMs[0],(width, height))
     heatmap = cv2.applyColorMap(resized, cv2.COLORMAP_JET)
@@ -117,22 +103,9 @@ while True:
     cv2.imwrite('CAM2.jpg', camresult)
     cv2.imshow('CAM', camresult)
 
-    # net = models.resnet18(pretrained=True)
-    # net = torch.load('resnet_bsize8_epoch5_full_1.pt')
-    # finalconv_name = 'layer4'
-    # feature_blobs = []
-    # net._modules["0"]._modules.get(finalconv_name).register_forward_hook(hook_feature)
-    # params = list(net.parameters())
-    # weight_softmax = np.squeeze(params[-4].data.numpy())
-
     if cv2.waitKey(20) & 0xFF == ord('q'):
         break
 
+
 cap.release()
 cv2.destroyAllWindows()
-
-# output the prediction
-# for i in range(0, 5):
-#     print('{:.3f} -> {}'.format(probs[i], classes[idx[i]]))
-
-
