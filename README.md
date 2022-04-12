@@ -28,6 +28,10 @@ Some predicted class activation maps are:
 
 You can see the demo with this mp4 file: ![demo](https://github.com/AnudeepDasAD/CAM/blob/main/CAM%202022-04-12%2013-18-53.mp4)
 
+
+
+## Bunch of data analysis of various types 
+
 ## References
 The work on conditional activation maps is taken from here:
 ```
@@ -36,5 +40,9 @@ The work on conditional activation maps is taken from here:
     title     = {Learning Deep Features for Discriminative Localization},
     booktitle = {Computer Vision and Pattern Recognition},
     year      = {2016}
+
+https://user-images.githubusercontent.com/55476249/163021500-5196138e-637b-4b96-af7d-e1d50efb2a88.mp4
+
+
 }
 ```
