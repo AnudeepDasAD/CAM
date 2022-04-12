@@ -1,4 +1,4 @@
-# CS 497: Winter 2022 Project - Analyzing Biases in CNNs for Faces through Conditional Activation Maps
+# CS 497: Winter 2022 Project - Analyzing Biases in CNNs on Human Faces through Conditional Activation Maps
 
 ## Introduction
 TODO: Short overview of project purpose and scope
