@@ -1,4 +1,4 @@
-# CS 497: Winter 2022 Project - Analyzing Biases in CNNs on Human Faces through Conditional Activation Maps
+# CS 497: Winter 2022 Project - Analyzing Biases in CNNs on Human Faces through Class Activation Maps
 
 Anudeep Das, Raymond Zhou
 
